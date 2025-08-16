@@ -13,7 +13,10 @@ class SeriesController extends Controller
     {
         $series =Serie::query()->get();
 
-       return view('series.index')->with('series', $series);
+        $mensagemSucesso = session('mensagem.sucesso');
+   
+
+       return view('series.index')->with('series', $series)->with("mensagemSucesso", $mensagemSucesso);
     }
 
     public function create()
@@ -23,34 +26,31 @@ class SeriesController extends Controller
 
     public function store(Request $request)
     {
-        $nomeSerie = $request->input('nome');
+        $serie = Serie::create($request->all());
+        $request->session()->flash('mensagem.sucesso',"Série {$serie->nome} adicionada com sucesso");
 
-        $serie = new Serie();
-        $serie->nome = $nomeSerie;
-        $serie->save();
-
-        return redirect('/series');
+        return to_route("series.index");
     }
 
-    public function delete(Request $request)
+    public function destroy(Serie $series, Request $request)
     {
-        $id = $request->input('id');
-        Serie::destroy($id);
 
-         return redirect('/series');
+        $series->delete();
+        $request->session()->flash("mensagem.sucesso", "Série {$series->nome} removida com sucesso");
+
+         return to_route("series.index");
     }
 
-    public function update(Request $request)
+    public function edit(Serie $series) {
+        return view("series.edit")->with("serie", $series);
+    }
+
+    public function update(Serie $series, Request $request)
     {
-        $id = $request->input('id');
-        if ($request->method() == 'GET'){
-            return view('series.update')->with('serie', Serie::query()->where('id', $id)->first());
-        }else {
-            
-            $affected = Serie::query()->where('id', $id)->update(['nome' => $request->input('nome')]);
-            if ($affected) {
-                return redirect('/series');
-            }
-        }
+        $series->nome = $request->nome;
+        $series->save();
+
+        return to_route('series.index')
+        ->with('mensagem.sucesso', "Série {$series->nome} atualizada com sucesso");
     }
 }

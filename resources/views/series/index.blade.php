@@ -1,19 +1,21 @@
 <x-layout title="Séries">
-    <a href="/series/criar"class="btn btn-dark mb-2">Adicionar</a>
+    <a href="{{ route("series.create") }}" class="btn btn-dark mb-2">Adicionar</a>
+    @isset($mensagemSucesso)
+    <div class="alert alert-success">
+        {{ $mensagemSucesso }}
+    </div>
+    @endisset
+    
     <ul class="list-group ">
         @foreach($series as $serie)
-            <li class="list-group-item d-flex justify-content-between">{{ $serie->nome  }}
+            <li class="list-group-item d-flex justify-content-between align-items-center">{{ $serie->nome  }}
 
                 <div class=" d-inline-block d-flex">
-                    <form action="/series/update" method="GET">
+                   <a href="{{ route('series.edit', $serie->id) }}" class="btn btn-primary btn-sm">Editar</a>
+                    <form action="{{ route("series.destroy", $serie->id) }}" method="POST" class="ms-2">
                         @csrf
-                        <input type="hidden" name="id" value="{{ $serie->id }}">
-                        <button type="submit" class="btn btn-primary" >Editar</button>
-                    </form>
-                    <form action="/series/remover" method="POST">
-                        @csrf
-                        <input type="hidden" name="id" value="{{ $serie->id }}">
-                        <button type="submit" class="btn btn-primary" >Remover</button>
+                        @method("DELETE")
+                        <button class="btn btn-danger btn-sm" >Remover</button>
                     </form>
                 </div>
             </li>
