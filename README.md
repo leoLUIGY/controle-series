@@ -1,4 +1,9 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+<p align="center">
+  <a href="https://laravel.com" target="_blank">
+    <img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo">
+  </a>
+</p>
+
 # 📺 CRUD de Séries com Laravel
 
 Este projeto foi desenvolvido durante os cursos de **Laravel** da [Alura](https://www.alura.com.br), com foco na criação de um sistema de cadastro de séries utilizando **CRUD**, **SQLite** e **Migrations**.  
@@ -35,38 +40,26 @@ O objetivo principal foi aprender os fundamentos do **framework Laravel**, inclu
 ### Passo a passo
 1. Clone o repositório:
    ```bash
-   git clone https://github.com/seu-usuario/nome-do-repo.git
-   cd nome-do-repo
-Instale as dependências:
+   git clone https://github.com/leoLUIGY/controle-series.git
+   cd controle-serie
+   
+2. Instale as dependências:
+   ```
+   composer install
+   
+3. Copie o arquivo .env.example para .env:
+    ```
+    cp .env.example .env
 
-bash
-Copiar código
-composer install
-Copie o arquivo .env.example para .env:
+4. Configure o .env para usar SQLite:
+    ```
+    DB_CONNECTION=sqlite
+    DB_DATABASE=./database/database.sqlite
 
-bash
-Copiar código
-cp .env.example .env
-Configure o .env para usar SQLite:
+5. Rode as migrations:
+    ```
+    php artisan migrate
 
-env
-Copiar código
-DB_CONNECTION=sqlite
-DB_DATABASE=./database/database.sqlite
-Crie o arquivo vazio database.sqlite dentro da pasta database.
-
-Rode as migrations:
-
-bash
-Copiar código
-php artisan migrate
-Inicie o servidor local:
-
-bash
-Copiar código
-php artisan serve
-Acesse no navegador:
-
-arduino
-Copiar código
-http://localhost:8000
+6. Inicie o servidor:
+    ```
+    php artisan serve
